@@ -1,0 +1,13 @@
+﻿Name: Associativy Wikipedia
+AntiForgery: enabled
+Author: Piedone
+Website: http://associativy.com
+Version: 1.0
+OrchardVersion: 1.6
+Description: Description for the module
+Features:
+    Associativy.Instances.Wikipedia:
+		Name: Associativy Wikipedia
+        Description: An Associativy Instance for storing Wikipedia connections.
+		Category: Associativy
+		Dependencies: Associativy
