@@ -10,4 +10,4 @@ Features:
 		Name: Associativy Wikipedia
         Description: An Associativy Instance for storing Wikipedia connections.
 		Category: Associativy
-		Dependencies: Associativy
+		Dependencies: Associativy.Frontends.Jit
