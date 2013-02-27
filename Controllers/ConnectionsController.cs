@@ -31,7 +31,6 @@ namespace Associativy.Instances.Wikipedia.Controllers
 
             var item1 = CreatePageIfNotExists(connection.Page1);
             var item2 = CreatePageIfNotExists(connection.Page2);
-            _contentManager.Flush();
 
             var graphContext = new GraphContext { GraphName = WikipediaGraphProvider.Name };
             var graph = _graphManager.FindGraph(graphContext);
@@ -56,6 +55,8 @@ namespace Associativy.Instances.Wikipedia.Controllers
                 item.As<TitlePart>().Title = page.Title;
                 item.As<WikipediaPagePart>().Url = page.Url;
                 _contentManager.Create(item);
+
+                _contentManager.Flush();
             }
 
             return item;
