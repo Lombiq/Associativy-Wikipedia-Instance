@@ -13,7 +13,7 @@ namespace Associativy.Instances.Wikipedia
         {
             if (context.GraphContext.GraphName != WikipediaGraphProvider.Name) return;
 
-            context.Query.Join<WikipediaPagePartRecord>().WithQueryHintsFor("WikipediaPage"); 
+            context.Query.Join<WikipediaPagePartRecord>().WithQueryHintsFor(WellKnownConsts.WikipediaPageContentType); 
         }
     }
 }
