@@ -10,6 +10,8 @@ using Associativy.Instances.Wikipedia.Models;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
 using Associativy.Services;
+using Piedone.HelpfulLibraries.Tasks;
+using Orchard.Logging;
 
 namespace Associativy.Instances.Wikipedia.Controllers
 {
@@ -17,11 +19,21 @@ namespace Associativy.Instances.Wikipedia.Controllers
     {
         private readonly IGraphManager _graphManager;
         private readonly IContentManager _contentManager;
+        private readonly ILockFileManager _lockFileManager;
 
-        public ConnectionsController(IGraphManager graphManager, IContentManager contentManager)
+        public ILogger Logger { get; set; }
+
+
+        public ConnectionsController(
+            IGraphManager graphManager, 
+            IContentManager contentManager,
+            ILockFileManager lockFileManager)
         {
             _graphManager = graphManager;
             _contentManager = contentManager;
+            _lockFileManager = lockFileManager;
+
+            Logger = NullLogger.Instance;
         }
 
 
@@ -29,19 +41,30 @@ namespace Associativy.Instances.Wikipedia.Controllers
         {
             if (connection == null) return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "No connection to save.");
 
-            var item1 = CreatePageIfNotExists(connection.Page1);
-            var item2 = CreatePageIfNotExists(connection.Page2);
+            using (var lockFile1 = _lockFileManager.TryAcquireLock(connection.Page1.Title, 30000))
+            using (var lockFile2 = _lockFileManager.TryAcquireLock(connection.Page2.Title, 30000))
+            {
+                if (lockFile1 == null || lockFile2 == null)
+                {
+                    var message = "Can't save Associativy Wikipedia connection between " + connection.Page1.Title + " and " + connection.Page2.Title + ". The locks for the nodes weren't released in time.";
+                    Logger.Error(message);
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, message);
+                }
 
-            var graphContext = new GraphContext { GraphName = WikipediaGraphProvider.Name };
-            var graph = _graphManager.FindGraph(graphContext);
-            graph.PathServices.ConnectionManager.Connect(graphContext, item1, item2);
+                var item1 = CreatePageIfNotExists(connection.Page1);
+                var item2 = CreatePageIfNotExists(connection.Page2);
+
+                var graphContext = new GraphContext { GraphName = WikipediaGraphProvider.Name };
+                var graph = _graphManager.FindGraph(graphContext);
+                graph.PathServices.ConnectionManager.Connect(graphContext, item1, item2);
 
 
-            var response = Request.CreateResponse<Connection>(HttpStatusCode.Created, connection);
+                var response = Request.CreateResponse<Connection>(HttpStatusCode.Created, connection);
 
-            //var uri = Url.Link("DefaultApi", new { id = item.Id });
-            //response.Headers.Location = new Uri(uri);
-            return response;
+                //var uri = Url.Link("DefaultApi", new { id = item.Id });
+                //response.Headers.Location = new Uri(uri);
+                return response; 
+            }
         }
 
 
