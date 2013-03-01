@@ -112,10 +112,6 @@
       <Project>{a8ee4964-4880-4ee1-ac0a-75492d89bbe8}</Project>
       <Name>Associativy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Piedone.HelpfulLibraries\Piedone.HelpfulLibraries.csproj">
-      <Project>{ea61ad10-39d6-41a9-b12b-227f50c54158}</Project>
-      <Name>Piedone.HelpfulLibraries</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
