@@ -50,6 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\aspnetwebapi\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>E:\Projects\Saját\Associativy\Associativy Development\lib\newtonsoft.json\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -108,9 +111,17 @@
       <Project>{78ace1ae-f7ae-4342-a83f-8fab64514f52}</Project>
       <Name>Associativy.Frontends</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Associativy.Neo4j\Associativy.Neo4j.csproj">
+      <Project>{6e96e80e-8ce0-4970-8db4-6b3dc85e38ad}</Project>
+      <Name>Associativy.Neo4j</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Associativy\Associativy.csproj">
       <Project>{a8ee4964-4880-4ee1-ac0a-75492d89bbe8}</Project>
       <Name>Associativy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Piedone.HelpfulLibraries\Piedone.HelpfulLibraries.csproj">
+      <Project>{ea61ad10-39d6-41a9-b12b-227f50c54158}</Project>
+      <Name>Piedone.HelpfulLibraries</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
@@ -124,6 +135,7 @@
     <Compile Include="Models\WikipediaPage.cs" />
     <Compile Include="Models\WikipediaPageConnectorRecord.cs" />
     <Compile Include="Models\WikipediaPagePart.cs" />
+    <Compile Include="Neo4jWikipediaGraphProvider.cs" />
     <Compile Include="NodeManagerEventHander.cs" />
     <Compile Include="WellKnownConsts.cs" />
     <Compile Include="WikipediaGraphProvider.cs" />

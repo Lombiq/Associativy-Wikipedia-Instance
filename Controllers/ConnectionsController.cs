@@ -10,6 +10,7 @@ using Associativy.Instances.Wikipedia.Models;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
 using Associativy.Services;
+using Associativy.Models;
 
 namespace Associativy.Instances.Wikipedia.Controllers
 {
@@ -17,6 +18,7 @@ namespace Associativy.Instances.Wikipedia.Controllers
     {
         private readonly IGraphManager _graphManager;
         private readonly IContentManager _contentManager;
+
 
         public ConnectionsController(IGraphManager graphManager, IContentManager contentManager)
         {
@@ -27,12 +29,24 @@ namespace Associativy.Instances.Wikipedia.Controllers
 
         public HttpResponseMessage Post(Connection connection)
         {
+            return HandlePost(connection, false);
+        }
+
+        //public HttpResponseMessage Post(Connection connection)
+        //{
+        //    return HandlePost(connection, true);
+        //}
+
+
+        private HttpResponseMessage HandlePost(Connection connection, bool useNeo4j)
+        {
             if (connection == null) return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "No connection to save.");
 
             var item1 = CreatePageIfNotExists(connection.Page1);
             var item2 = CreatePageIfNotExists(connection.Page2);
 
-            var graphContext = new GraphContext { GraphName = WikipediaGraphProvider.Name };
+            var graphName = useNeo4j ? Neo4jWikipediaGraphProvider.Name : WikipediaGraphProvider.Name;
+            var graphContext = new GraphContext { GraphName = graphName };
             var graph = _graphManager.FindGraph(graphContext);
             graph.PathServices.ConnectionManager.Connect(graphContext, item1, item2);
 
@@ -44,7 +58,6 @@ namespace Associativy.Instances.Wikipedia.Controllers
             return response;
         }
 
-
         private ContentItem CreatePageIfNotExists(WikipediaPage page)
         {
             var item = GetPageByUrl(page.Url);
@@ -52,7 +65,7 @@ namespace Associativy.Instances.Wikipedia.Controllers
             if (item == null)
             {
                 item = _contentManager.New(WellKnownConsts.WikipediaPageContentType);
-                item.As<TitlePart>().Title = page.Title;
+                item.As<AssociativyNodeTitleLabelPart>().Label = page.Title;
                 item.As<WikipediaPagePart>().Url = page.Url;
                 _contentManager.Create(item);
 

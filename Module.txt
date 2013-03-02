@@ -11,3 +11,8 @@ Features:
         Description: An Associativy Instance for storing Wikipedia connections.
 		Category: Associativy
 		Dependencies: Associativy.Administration, Associativy.Frontends.Jit
+    Associativy.Instances.Wikipedia.Neo4j:
+		Name: Associativy Wikipedia Neo4j
+        Description: An Associativy Instance for storing Wikipedia connections in a Neo4j graph database.
+		Category: Associativy
+		Dependencies: Associativy.Instances.Wikipedia, Associativy.Neo4j

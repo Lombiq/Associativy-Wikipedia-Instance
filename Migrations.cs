@@ -34,8 +34,7 @@ namespace Associativy.Instances.Wikipedia
             ContentDefinitionManager.AlterTypeDefinition(WellKnownConsts.WikipediaPageContentType,
                 cfg => cfg
                     .WithPart("CommonPart")
-                    .WithPart("TitlePart")
-                    .WithLabel()
+                    .WithTitleLabel()
                     .WithPart(typeof(WikipediaPagePart).Name)
                     .Creatable(false)
                     .Draftable(false)
