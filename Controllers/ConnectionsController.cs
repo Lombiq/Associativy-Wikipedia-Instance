@@ -29,26 +29,16 @@ namespace Associativy.Instances.Wikipedia.Controllers
 
         public HttpResponseMessage Post(Connection connection)
         {
-            return HandlePost(connection, false);
-        }
-
-        //public HttpResponseMessage Post(Connection connection)
-        //{
-        //    return HandlePost(connection, true);
-        //}
-
-
-        private HttpResponseMessage HandlePost(Connection connection, bool useNeo4j)
-        {
             if (connection == null) return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "No connection to save.");
 
             var item1 = CreatePageIfNotExists(connection.Page1);
             var item2 = CreatePageIfNotExists(connection.Page2);
 
-            var graphName = useNeo4j ? Neo4jWikipediaGraphProvider.Name : WikipediaGraphProvider.Name;
-            var graphContext = new GraphContext { GraphName = graphName };
-            var graph = _graphManager.FindGraph(graphContext);
-            graph.PathServices.ConnectionManager.Connect(graphContext, item1, item2);
+            var graph = _graphManager.FindGraph(new GraphContext { Name = WikipediaGraphProvider.Name });
+            graph.Services.ConnectionManager.Connect(item1, item2);
+
+            var neo4jGraph = _graphManager.FindGraph(new GraphContext { Name = Neo4jWikipediaGraphProvider.Name });
+            if (neo4jGraph != null) neo4jGraph.Services.ConnectionManager.Connect(item1, item2);
 
 
             var response = Request.CreateResponse<Connection>(HttpStatusCode.Created, connection);

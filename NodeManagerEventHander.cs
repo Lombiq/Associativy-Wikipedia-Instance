@@ -11,7 +11,7 @@ namespace Associativy.Instances.Wikipedia
     {
         public void QueryBuilt(QueryBuiltContext context)
         {
-            if (context.GraphContext.GraphName != WikipediaGraphProvider.Name) return;
+            if (context.GraphDescriptor.Name != WikipediaGraphProvider.Name) return;
 
             context.Query.Join<WikipediaPagePartRecord>().WithQueryHintsFor(WellKnownConsts.WikipediaPageContentType); 
         }

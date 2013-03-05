@@ -12,18 +12,16 @@ namespace Associativy.Instances.Wikipedia
 {
     public class WikipediaGraphProvider : IGraphProvider
     {
-        private readonly Func<IPathServices> _pathServicesFactory;
+        private readonly IGraphServicesFactory _graphServicesFactory;
 
         public Localizer T { get; set; }
 
         public const string Name = "AssociativyWikipedia";
 
 
-        public WikipediaGraphProvider(
-            Work<ISqlConnectionManager<WikipediaPageConnectorRecord>> connectionManagerWork,
-            Work<IStandardPathFinder> pathFinderWork)
+        public WikipediaGraphProvider(IGraphServicesFactory<IStandardMind, ISqlConnectionManager<WikipediaPageConnectorRecord>, IStandardPathFinder, IStandardNodeManager, IStandardGraphStatisticsService> graphServicesFactory)
         {
-            _pathServicesFactory = () => new PathServices(connectionManagerWork.Value, pathFinderWork.Value);
+            _graphServicesFactory = graphServicesFactory;
 
             T = NullLocalizer.Instance;
         }
@@ -35,7 +33,7 @@ namespace Associativy.Instances.Wikipedia
                 Name,
                 T("Associativy Wikipedia Graph"),
                 new[] { "WikipediaPage" },
-                _pathServicesFactory);
+                _graphServicesFactory.Factory);
         }
     }
 }

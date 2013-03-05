@@ -14,7 +14,7 @@ namespace Associativy.Instances.Wikipedia
     [OrchardFeature("Associativy.Instances.Wikipedia.Neo4j")]
     public class Neo4jWikipediaGraphProvider : IGraphProvider
     {
-        private readonly Func<IPathServices> _pathServicesFactory;
+        private readonly Func<IGraphDescriptor, IGraphServices> _graphServicesFactory;
 
         public Localizer T { get; set; }
 
@@ -22,15 +22,20 @@ namespace Associativy.Instances.Wikipedia
 
 
         public Neo4jWikipediaGraphProvider(
-            Work<INeo4jConnectionManager> connectionManagerWork,
-            Work<INeo4jPathFinder> pathFinderWork,
-            Work<IStandardPathFinder> standardPathFinderWork)
+            Func<IGraphDescriptor, IStandardMind> mindFactory,
+            Func<IGraphDescriptor, Uri, INeo4jConnectionManager> connectionManagerFactory,
+            Func<IGraphDescriptor, IStandardPathFinder> pathFinderFactory,
+            Func<IGraphDescriptor, IStandardNodeManager> nodeManagerFactory,
+            Func<IGraphDescriptor, IStandardGraphStatisticsService> graphStatisticsServiceFactory)
         {
-            _pathServicesFactory = () =>
+            _graphServicesFactory = (graphDescriptor) =>
             {
-                var connectionManager = connectionManagerWork.Value;
-                connectionManager.RootUri = new Uri("http://localhost:7474/db/data/");
-                return new PathServices(connectionManager, standardPathFinderWork.Value/*pathFinderWork.Value*/);
+                return new GraphServices(
+                    mindFactory(graphDescriptor),
+                    connectionManagerFactory(graphDescriptor, new Uri("http://localhost:7474/db/data/")),
+                    pathFinderFactory(graphDescriptor),
+                    nodeManagerFactory(graphDescriptor),
+                    graphStatisticsServiceFactory(graphDescriptor));
             };
 
             T = NullLocalizer.Instance;
@@ -43,7 +48,7 @@ namespace Associativy.Instances.Wikipedia
                 Name,
                 T("Associativy Neo4j Wikipedia Graph"),
                 new[] { "WikipediaPage" },
-                _pathServicesFactory);
+                _graphServicesFactory);
         }
     }
 }
