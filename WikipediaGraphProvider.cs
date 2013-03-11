@@ -19,7 +19,7 @@ namespace Associativy.Instances.Wikipedia
         public const string Name = "AssociativyWikipedia";
 
 
-        public WikipediaGraphProvider(IGraphServicesFactory<IStandardMind, ISqlConnectionManager<WikipediaPageConnectorRecord>, IStandardPathFinder, IStandardNodeManager, IStandardGraphStatisticsService> graphServicesFactory)
+        public WikipediaGraphProvider(IGraphServicesFactory<IStandardMind, ISqlConnectionManager<WikipediaPageConnectorRecord>, IStandardPathFinder, IStandardNodeManager, ISqlConnectionManager<WikipediaPageConnectorRecord>> graphServicesFactory)
         {
             _graphServicesFactory = graphServicesFactory;
 

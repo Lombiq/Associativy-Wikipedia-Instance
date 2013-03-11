@@ -26,7 +26,7 @@ namespace Associativy.Instances.Wikipedia
             Func<IGraphDescriptor, Uri, INeo4jConnectionManager> connectionManagerFactory,
             Func<IGraphDescriptor, IStandardPathFinder> pathFinderFactory,
             Func<IGraphDescriptor, IStandardNodeManager> nodeManagerFactory,
-            Func<IGraphDescriptor, IStandardGraphStatisticsService> graphStatisticsServiceFactory)
+            Func<IGraphDescriptor, INeo4jGraphStatisticsService> graphStatisticsServiceFactory)
         {
             _graphServicesFactory = (graphDescriptor) =>
             {
