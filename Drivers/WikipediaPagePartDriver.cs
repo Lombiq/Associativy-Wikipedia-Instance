@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Associativy.Instances.Wikipedia.Models;
+﻿using Associativy.Instances.Wikipedia.Models;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
 

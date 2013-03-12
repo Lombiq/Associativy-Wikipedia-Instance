@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Associativy.GraphDiscovery;
 using Associativy.Neo4j.Services;
 using Associativy.Services;
-using Orchard.Environment;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 

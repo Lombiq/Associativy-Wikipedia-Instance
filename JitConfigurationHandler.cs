@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Associativy.Frontends.Engines.Jit;
+﻿using Associativy.Frontends.Engines.Jit;
 using Associativy.Frontends.Engines.Jit.ViewModels;
 using Associativy.Frontends.EventHandlers;
 using Associativy.Instances.Wikipedia.Models;

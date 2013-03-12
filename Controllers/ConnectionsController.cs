@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using Associativy.GraphDiscovery;
 using Associativy.Instances.Wikipedia.Models;
-using Orchard.ContentManagement;
-using Orchard.Core.Title.Models;
-using Associativy.Services;
 using Associativy.Models;
+using Associativy.Services;
+using Orchard.ContentManagement;
 
 namespace Associativy.Instances.Wikipedia.Controllers
 {
