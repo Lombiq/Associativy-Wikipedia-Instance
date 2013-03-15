@@ -20,15 +20,17 @@ namespace Associativy.Instances.Wikipedia
         public Neo4jWikipediaGraphProvider(
             Func<IGraphDescriptor, IStandardMind> mindFactory,
             Func<IGraphDescriptor, Uri, INeo4jConnectionManager> connectionManagerFactory,
-            Func<IGraphDescriptor, IStandardPathFinder> pathFinderFactory,
+            Func<IGraphDescriptor, Uri, INeo4jPathFinder> pathFinderFactory,
             Func<IGraphDescriptor, IStandardNodeManager> nodeManagerFactory)
         {
             _graphServicesFactory = (graphDescriptor) =>
             {
+                var neo4jUri = new Uri("http://localhost:7474/db/data/");
+
                 return new GraphServices(
                     mindFactory(graphDescriptor),
-                    connectionManagerFactory(graphDescriptor, new Uri("http://localhost:7474/db/data/")),
-                    pathFinderFactory(graphDescriptor),
+                    connectionManagerFactory(graphDescriptor, neo4jUri),
+                    pathFinderFactory(graphDescriptor, neo4jUri),
                     nodeManagerFactory(graphDescriptor));
             };
 
