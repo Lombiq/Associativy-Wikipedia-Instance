@@ -54,8 +54,6 @@ namespace Associativy.Instances.Wikipedia.Controllers
                 item.As<AssociativyNodeTitleLabelPart>().Label = page.Title;
                 item.As<WikipediaPagePart>().Url = page.Url;
                 _contentManager.Create(item);
-
-                _contentManager.Flush();
             }
 
             return item;
