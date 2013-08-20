@@ -25,10 +25,11 @@ namespace Associativy.Instances.Wikipedia
                 table => table
                     .ContentPartRecord()
                     .Column<string>("Url", column => column.WithLength(1024).Unique())
-            ).AlterTable(typeof(WikipediaPagePartRecord).Name,
+                )
+            .AlterTable(typeof(WikipediaPagePartRecord).Name,
                 table => table
                     .CreateIndex("Url", new string[] { "Url" })
-            );
+                );
 
             ContentDefinitionManager.AlterTypeDefinition(WellKnownConsts.WikipediaPageContentType,
                 cfg => cfg
@@ -37,7 +38,7 @@ namespace Associativy.Instances.Wikipedia
                     .WithPart(typeof(WikipediaPagePart).Name)
                     .Creatable(false)
                     .Draftable(false)
-            );
+                );
 
             // This is to prevent exceptions when fast subsequent calls to the API endpoint cause the same entry to be inserted into
             // the ContentTypeRecord table multiple times.
