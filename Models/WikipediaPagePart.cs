@@ -7,8 +7,8 @@ namespace Associativy.Instances.Wikipedia.Models
     {
         public string Url
         {
-            get { return Record.Url; }
-            set { Record.Url = value; }
+            get { return Retrieve(x => x.Url); }
+            set { Store(x => x.Url, value); }
         }
     }
 

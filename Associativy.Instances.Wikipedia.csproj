@@ -139,7 +139,6 @@
     <Compile Include="Models\WikipediaPageConnectorRecord.cs" />
     <Compile Include="Models\WikipediaPagePart.cs" />
     <Compile Include="Neo4jWikipediaGraphProvider.cs" />
-    <Compile Include="NodeManagerEventHander.cs" />
     <Compile Include="WellKnownConsts.cs" />
     <Compile Include="WikipediaGraphProvider.cs" />
   </ItemGroup>
