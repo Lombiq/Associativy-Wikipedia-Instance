@@ -126,7 +126,9 @@
       <Name>Piedone.HelpfulLibraries</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Licence.md" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ConnectionsController.cs" />
     <Compile Include="Drivers\WikipediaPagePartDriver.cs" />
